@@ -22,7 +22,6 @@ import {
 
 import { query, write, writeOptimistic } from './operations';
 import { addCacheOutcome, toRequestPolicy } from './helpers/operation';
-import { filterVariables, getMainOperation } from './ast';
 import { Store, noopDataState, hydrateData, reserveLayer } from './store';
 import { Data, Dependencies, CacheExchangeOpts } from './types';
 
@@ -146,12 +145,7 @@ export const cacheExchange = <C extends Partial<CacheExchangeOpts>>(
       {
         key: operation.key,
         query: formatDocument(operation.query),
-        variables: operation.variables
-          ? filterVariables(
-              getMainOperation(operation.query),
-              operation.variables
-            )
-          : operation.variables,
+        variables: operation.variables,
       },
       operation.context
     );
